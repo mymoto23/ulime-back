@@ -12,7 +12,8 @@ const checkIfAllFieldsValid = (body) => {
 }
 
 router.post('/', async (req, res) => {
-    if (checkIfAllFieldsValid) {
+    console.log('test', regex.test(req.body.email));
+    if (checkIfAllFieldsValid(req.body)) {
         addNewPreRegister(req, res);
     } else {
         res.status(400).json({error: '정보를 정확히 기입해 주세요.'});
