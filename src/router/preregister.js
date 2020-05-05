@@ -6,13 +6,12 @@ const router = express.Router();
 const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;;
 
 const checkIfAllFieldsValid = (body) => {
-    const {name, email, youtubeChannelName, subscriberCount, category, affiliation, youtubeURL} = body;
-    if (!name || !regex.test(email) || !youtubeChannelName || subscriberCount < 0 || category === 100 || affiliation === 100 || !youtubeURL) return false;
+    const {name, email, youtubeChannelName, subscriberCount, category, affiliation, youtubeChannelURL} = body;
+    if (!name || !regex.test(email) || !youtubeChannelName || subscriberCount < 0 || category === 100 || affiliation === 100 || !youtubeChannelURL) return false;
     return true;
 }
 
 router.post('/', async (req, res) => {
-    console.log('test', regex.test(req.body.email));
     if (checkIfAllFieldsValid(req.body)) {
         addNewPreRegister(req, res);
     } else {
