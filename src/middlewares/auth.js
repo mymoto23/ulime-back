@@ -26,3 +26,7 @@ export const authMiddleware = (req, res, next) => {
         })
     }
 }
+
+// export const verifyUserData = (req, res, next) => {
+    // const {username, password, } = req.body;
+// }

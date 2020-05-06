@@ -20,7 +20,7 @@ setUpCronTasks();
 app.use(cors({
     credentials: true, // enable set cookie
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    origin: ['http://13.209.211.204:3000', 'http://13.209.211.204', 'http://175.144.44.51:3000', 'http://175.144.44.51']
+    origin: ['http://13.209.211.204:3000', 'http://13.209.211.204', 'http://175.144.44.51:3000', 'http://175.144.44.51', 'http://localhost:3000']
   }));
 app.use(indexRouter);
 

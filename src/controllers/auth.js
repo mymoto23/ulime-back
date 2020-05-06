@@ -4,20 +4,24 @@ import _ from 'lodash';
 import crypto from 'crypto';
 import config from '../config';
 
-export const registerNewUser = async (username, password) => {
+export const checkIfUserAlreadyExists = async (username) => { //returns false if doesnt exist
     const user = await User.findOne({username}).exec();
-        if (!_.isEmpty(user)) {
-            throw new Error('User already exists');
-        } else {
-            const encrypted = crypto.createHmac('sha1', config.secret)
-                .update(password)
-                .digest('base64');
-            const user = new User({
-                username,
-                password: encrypted
-            });
-            return await user.save();
-        }
+    return !_.isEmpty(user); 
+}
+
+export const registerNewUser = async (user_data) => {
+    if ((await checkIfUserAlreadyExists(user_data.username))) {
+        throw new Error('User already exists');
+    } else {
+        const encrypted = crypto.createHmac('sha1', config.secret)
+            .update(user_data.password)
+            .digest('base64');
+        const user = new User({
+            ...user_data,
+            password: encrypted,
+        });
+        return await user.save();
+    }
 }
 
 export const login = async (username, password, secret) => {

@@ -1,6 +1,7 @@
 import express from 'express';
-import {registerNewUser, login} from '../controllers/auth';
+import {registerNewUser, login, checkIfUserAlreadyExists} from '../controllers/auth';
 import {authMiddleware} from '../middlewares/auth';
+
 
 const router = express.Router();
 
@@ -9,13 +10,18 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-    const {username, password} = req.body;
+    const user_data = req.body;
     try {
-        const newUser = await registerNewUser(username, password);
+        const newUser = await registerNewUser(user_data);
         res.json(newUser);
     } catch (e) {
         res.status(400).send(e.message);
     }
+})
+
+router.post('/check_availability', async (req, res) => {
+    console.log('test', !checkIfUserAlreadyExists(req.body.username), req.body.username);
+    res.json({available: !(await checkIfUserAlreadyExists(req.body.username))});
 })
 
 router.post('/login', async (req, res)=> {
@@ -29,14 +35,14 @@ router.post('/login', async (req, res)=> {
             token
         });
     } catch (e) {
-        res.send(e.message);
+        res.status(400).send(e.message);
     }
 });
 
 router.use('/verifyToken', authMiddleware);
 router.get('/verifyToken', async (req, res) => {
     res.json({
-        verifed: true,
+        verified: true,
         info: req.decoded
     })
 });

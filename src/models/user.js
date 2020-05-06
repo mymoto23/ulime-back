@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 const User = new Schema({
     username: String,
     password: String,
+    firstName: String,
+    lastName: String,
+    dob: Date,
+    gender: Number,
+    nationality: String,
 })
 
 // const userObj = mongoose.model('User', User);
