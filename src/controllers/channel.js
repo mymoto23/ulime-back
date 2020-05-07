@@ -42,10 +42,13 @@ export const getChannelwithId = (req, res) => {
 }
 
 export const addNewChannel = async (req) => {
-    const api_res = await getChannelBannerAndTN(req.body.channel_id);
+    console.log(req.body);
+    const api_res = await getChannelBannerAndTN(req.body.channelId);
+    console.log('res', api_res);
     const ch = new Channel({...api_res, intro: req.body.intro, category: req.body.category, titleENG: req.body.titleENG});
     ch.save((err) => {
         if (err) {
+            console.log(err);
             throw err;
         }
         return ch;
