@@ -25,10 +25,10 @@ router.get('/channels/:channel_id', (req, res) => {
 
 router.post('/channels', async (req, res) => {
     try {
+        console.log('hit');
         const channel = await addNewChannel(req);
         res.status(201).json(channel);
     } catch (e) {
-        console.log('req', req);
         res.status(400).json({error: e.message});
     }
 })

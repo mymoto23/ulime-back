@@ -4,10 +4,18 @@ import config from '../config';
 export const getChannelBannerAndTN = async (channelId) => {
     const API_KEY = config.youtubeAPIKey;
     try {
-        // 'https://www.googleapis.com/youtube/v3/channels?part=brandingSettings&id=UCwx6n_4OcLgzAGdty0RWCoA&key=AIzaSyBGstWEDuI5tkz7zR9g5izAlNNtqXL2kRU'
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=brandingSettings,snippet,statistics&id=${channelId}&key=${API_KEY}`);
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=brandingSettings,snippet,statistics&id=${channelId}&key=${API_KEY}`)
+            .then(response)
+            .catch(e => console.log(e));
+        // let response = null
+        // try {
+        //     response = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=brandingSettings,snippet,statistics&id=${channelId}&key=${API_KEY}`);
+        // } catch (e) {
+        //     console.log(e.error.message);
+        //     return;
+        // }
         const item = response.data.items[0];
-        // console.log('item', response, API_KEY);
+        console.log('item', item);
         const result = {
             title: item.brandingSettings.channel.title,
             bannerURL: item.brandingSettings.image.bannerTabletHdImageUrl,

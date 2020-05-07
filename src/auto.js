@@ -4,7 +4,7 @@ import { updateAllChannels } from './controllers/channel';
 
 export function setUpCronTasks() {
     console.log('Cron Task set up');
-    cron.schedule('* * * * * *', updateAllChannels);
+    cron.schedule('0 0,12 * * *', updateAllChannels);
 }
 
 // export setUpCronTasks
